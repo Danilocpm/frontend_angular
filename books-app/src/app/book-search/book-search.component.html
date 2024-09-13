@@ -1,22 +1,27 @@
 <div>
-    <input [(ngModel)]="query" placeholder="Search term" />
-    <select [(ngModel)]="filter">
-      <option value="intitle">Title</option>
-      <option value="inauthor">Author</option>
-    </select>
-    <button (click)="search()">Search</button>
-  </div>
-  
-  <div class="books-container">
-    <div *ngIf="books.length" class="books-wrapper">
-      <div *ngFor="let book of books" class="book-card">
-        <img *ngIf="book.volumeInfo.imageLinks" [src]="book.volumeInfo.imageLinks.thumbnail" alt="Book cover" class="book-cover" />
-        <div class="book-details">
-          <h3>{{ book.volumeInfo.title }}</h3>
-          <p><strong>Author(s):</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
-          <p><strong>Description:</strong> {{ book.volumeInfo.description || 'No description available' }}</p>
-        </div>
+  <input [(ngModel)]="query" placeholder="Search term" />
+  <select [(ngModel)]="filter">
+    <option value="intitle">Title</option>
+    <option value="inauthor">Author</option>
+  </select>
+  <button (click)="search()">Search</button>
+</div>
+
+<div class="books-container">
+  <div *ngIf="books.length" class="books-wrapper">
+    <div *ngFor="let book of books" class="book-card">
+      <img *ngIf="book.volumeInfo.imageLinks" [src]="book.volumeInfo.imageLinks.thumbnail" alt="Book cover" class="book-cover" />
+      <div class="book-details">
+        <h3>{{ book.volumeInfo.title }}</h3>
+        <p><strong>Author(s):</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
+        <p class="book-description" [ngClass]="{'expanded': book.expanded}">
+          {{ getDescription(book.volumeInfo.description, book.expanded) }}
+          <span *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)">...</span>
+          <a *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)" (click)="toggleExpand(book)">Ler mais</a>
+        </p>
       </div>
     </div>
   </div>
-  
+</div>
+
+
