@@ -1,3 +1,33 @@
+.site-header {
+  width: 100%;
+  background-color: #f8f9fa; /* Cor de fundo do header */
+  padding: 10px 20px; /* Espaçamento interno do header */
+  position: fixed; /* Fixa o header no topo da página */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Garante que o header esteja acima de outros elementos */
+  border-bottom: 1px solid #ddd; /* Linha de separação abaixo do header */
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+.header-content {
+  display: flex;
+  align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+
+.header-content input,
+.header-content select,
+.header-content button {
+  margin: 0 5px; /* Espaçamento entre os itens */
+}
+
+.books-container {
+  margin-top: 60px; /* Espaçamento para não sobrepor o header fixo */
+}
+
+
+
 .books-container {
   display: flex;
   justify-content: center; /* Centraliza o container de livros */
@@ -52,6 +82,23 @@
 
 .book-details a:hover {
   text-decoration: underline;
+}
+
+.book-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.book-actions i {
+  font-size: 18px; /* Ajuste o tamanho do ícone conforme necessário */
+  cursor: pointer;
+  color: #007bff; /* Cor do ícone */
+}
+
+.book-actions i:hover {
+  color: #0056b3; /* Cor do ícone ao passar o mouse */
 }
 
 

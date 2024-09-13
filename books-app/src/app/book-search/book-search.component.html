@@ -1,11 +1,12 @@
-<div>
-  <input [(ngModel)]="query" placeholder="Search term" />
-  <select [(ngModel)]="filter">
-    <option value="intitle">Title</option>
-    <option value="inauthor">Author</option>
-  </select>
-  <button (click)="search()">Search</button>
-</div>
+<header class="site-header">
+  <div class="header-content">
+    <input [(ngModel)]="query" (keydown.enter)="search()" placeholder="Search term" />
+    <select [(ngModel)]="filter">
+      <option value="intitle">Title</option>
+      <option value="inauthor">Author</option>
+    </select>
+  </div>
+</header>
 
 <div class="books-container">
   <div *ngIf="books.length" class="books-wrapper">
@@ -19,9 +20,14 @@
           <span *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)">...</span>
           <a *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)" (click)="toggleExpand(book)">Ler mais</a>
         </p>
+        <div class="book-actions">
+          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 
