@@ -1,0 +1,59 @@
+.books-container {
+    display: flex;
+    justify-content: center; /* Centraliza o container de livros */
+    padding: 16px;
+  }
+  
+  .books-wrapper {
+    max-width: 800px; /* Largura máxima do container de livros */
+    width: 100%;
+  }
+  
+  .book-card {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px; /* Espaçamento entre as boxes */
+    max-width: 100%; /* Garante que a box não exceda a largura do container */
+    height: 200px; /* Altura fixa para todas as boxes */
+  }
+  
+  .book-cover {
+    width: 80px; /* Largura fixa da capa */
+    height: 120px; /* Altura fixa da capa */
+    border-radius: 4px;
+    margin-right: 16px; /* Espaçamento entre a capa e os detalhes */
+  }
+  
+  .book-details {
+    flex: 1; /* Faz com que o container de detalhes ocupe o espaço restante */
+    overflow: hidden; /* Oculta o conteúdo que excede a altura da box */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .book-details h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+    overflow: hidden; /* Oculta o texto que excede o espaço disponível */
+    text-overflow: ellipsis; /* Adiciona '...' se o texto for muito longo */
+  }
+  
+  .book-details p {
+    margin: 4px 0;
+    font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+    overflow: hidden; /* Oculta o texto que excede o espaço disponível */
+    text-overflow: ellipsis; /* Adiciona '...' se o texto for muito longo */
+  }
+
+  .book-card:hover {
+    background: #f0f0f0;
+    border-color: #bbb;
+    transform: scale(1.02);
+  }
+  
