@@ -21,7 +21,7 @@
           <a *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)" (click)="toggleExpand(book)">Ler mais</a>
         </p>
         <div class="book-actions">
-          <i class="fa fa-star" aria-hidden="true"></i>
+          <i class="fa fa-star" aria-hidden="true" (click)="addToFavorites(book.id)"></i> <!-- Add click event -->
           <i class="fa fa-pencil-alt" aria-hidden="true"></i>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BookService } from '../book.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FavoriteService } from '../favorite.service'; 
 
 @Component({
   selector: 'app-book-search',
@@ -16,7 +17,7 @@ export class BookSearchComponent {
   filter: 'intitle' | 'inauthor' = 'intitle';
   maxLength: number = 200; // Define o comprimento máximo da descrição
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private favoriteService: FavoriteService) {}
 
   search(): void {
     this.bookService.searchBooks(this.query, this.filter).subscribe((data) => {
@@ -43,6 +44,19 @@ export class BookSearchComponent {
     } else {
       return description.substring(0, this.maxLength) + '...';
     }
+  }
+
+  addToFavorites(bookId: string): void {
+    this.favoriteService.addFavorite(bookId).subscribe(
+      response => {
+        console.log('Book added to favorites:', response);
+        // Optionally, provide user feedback here
+      },
+      error => {
+        console.error('Error adding book to favorites:', error);
+        // Optionally, provide error feedback here
+      }
+    );
   }
 }
 
