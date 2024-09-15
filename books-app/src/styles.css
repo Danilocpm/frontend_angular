@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+/* Outras regras de estilo */
+html, body {
+  height: 100%;
+}
+
+.mat-dialog-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Certifique-se de que o modal ocupa pelo menos a altura da tela */
+    padding: 20px; /* Adiciona algum espaçamento interno */
+  }
+  
+  .custom-dialog-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Garante que o modal ocupe pelo menos a altura da tela */
+  }

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Submit a Review</h1>
+<form (ngSubmit)="submitReview()" #reviewForm="ngForm" class="review-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Rating</mat-label>
+    <input matInput type="number" id="rating" [(ngModel)]="rating" name="rating" min="1" max="5" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Review</mat-label>
+    <textarea matInput id="review" [(ngModel)]="review" name="review" required></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

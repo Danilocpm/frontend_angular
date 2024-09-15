@@ -101,5 +101,7 @@
   color: #0056b3; /* Cor do ícone ao passar o mouse */
 }
 
-
+.custom-dialog-container {
+  transform: translate(-50%, -50%);
+}
   

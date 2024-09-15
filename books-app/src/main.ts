@@ -6,6 +6,10 @@ import { appRoutes } from './app/app.routes';
 import { provideRouter } from '@angular/router';
 import { importProvidersFrom } from '@angular/core'; // Import necessário
 import { FormsModule } from '@angular/forms'; // Import do FormsModule
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -15,7 +19,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideRouter(appRoutes),
-    importProvidersFrom(FormsModule), // Adicionar FormsModule aqui
+    importProvidersFrom(FormsModule, MatDialogModule, MatInputModule, BrowserAnimationsModule, NoopAnimationsModule), // Adicionar FormsModule aqui
     {
       provide: JWT_OPTIONS,
       useValue: {

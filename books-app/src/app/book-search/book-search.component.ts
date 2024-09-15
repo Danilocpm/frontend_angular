@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { BookService } from '../book.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FavoriteService } from '../favorite.service'; 
+import { FavoriteService } from '../favorite.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReviewFormComponent } from '../review-form/review-form.component';
 
 @Component({
   selector: 'app-book-search',
@@ -17,7 +19,7 @@ export class BookSearchComponent {
   filter: 'intitle' | 'inauthor' = 'intitle';
   maxLength: number = 200; // Define o comprimento máximo da descrição
 
-  constructor(private bookService: BookService, private favoriteService: FavoriteService) {}
+  constructor(private bookService: BookService, private favoriteService: FavoriteService, public dialog: MatDialog) {}
 
   search(): void {
     this.bookService.searchBooks(this.query, this.filter).subscribe((data) => {
@@ -25,6 +27,22 @@ export class BookSearchComponent {
         ...book,
         expanded: false  // Inicializa a propriedade expanded como false
       }));
+    });
+  }
+
+  openReviewDialog(bookId: string): void {
+    const dialogRef = this.dialog.open(ReviewFormComponent, {
+      width: '400px',
+      height: 'auto',
+      panelClass: 'custom-dialog-container',
+      data: { bookId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Review submitted:', result);
+        // Aqui você pode chamar uma função para salvar a review no banco de dados
+      }
     });
   }
 
