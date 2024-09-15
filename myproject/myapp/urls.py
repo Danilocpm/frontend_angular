@@ -7,10 +7,12 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import FavoriteBookViewSet
 from .views import HelloWorldView
+from .views import ReviewViewSet
 
 
 router = DefaultRouter()
 router.register(r'favorites', FavoriteBookViewSet)
+router.register(r'reviews', ReviewViewSet, basename='review')
 
 urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

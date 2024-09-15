@@ -5,17 +5,19 @@ html, body {
   height: 100%;
 }
 
-.mat-dialog-container {
+.custom-dialog-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Certifique-se de que o modal ocupa pelo menos a altura da tela */
-    padding: 20px; /* Adiciona algum espaçamento interno */
+    align-items: center;
+    min-height: 40vh; /* Ajuste conforme necessário */
+    width: 80vw; /* Ajuste conforme necessário */
+    max-width: 2000px; /* Define uma largura máxima para o modal */
   }
   
-  .custom-dialog-container {
+  .mat-dialog-container {
     display: flex;
-    align-items: center;
+    flex-direction: row; /* Alinha os elementos do modal horizontalmente */
     justify-content: center;
-    min-height: 100vh; /* Garante que o modal ocupe pelo menos a altura da tela */
+    align-items: center;
+    height: auto; /* Ajuste a altura conforme necessário */
   }

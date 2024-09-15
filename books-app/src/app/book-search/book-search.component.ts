@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { FavoriteService } from '../favorite.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewFormComponent } from '../review-form/review-form.component';
+import { ReviewService } from '../review.service';
 
 @Component({
   selector: 'app-book-search',
@@ -19,7 +20,7 @@ export class BookSearchComponent {
   filter: 'intitle' | 'inauthor' = 'intitle';
   maxLength: number = 200; // Define o comprimento máximo da descrição
 
-  constructor(private bookService: BookService, private favoriteService: FavoriteService, public dialog: MatDialog) {}
+  constructor(private bookService: BookService, private favoriteService: FavoriteService, public dialog: MatDialog, private reviewService: ReviewService) {}
 
   search(): void {
     this.bookService.searchBooks(this.query, this.filter).subscribe((data) => {
@@ -32,7 +33,7 @@ export class BookSearchComponent {
 
   openReviewDialog(bookId: string): void {
     const dialogRef = this.dialog.open(ReviewFormComponent, {
-      width: '400px',
+      width: '500px',
       height: 'auto',
       panelClass: 'custom-dialog-container',
       data: { bookId }
@@ -41,10 +42,22 @@ export class BookSearchComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Review submitted:', result);
-        // Aqui você pode chamar uma função para salvar a review no banco de dados
+
+        // Chama o serviço para submeter a review
+        this.reviewService.submitReview(bookId, result.rating, result.review).subscribe(
+          response => {
+            console.log('Review successfully submitted:', response);
+            // Aqui você pode adicionar lógica para atualizar a UI ou mostrar uma mensagem de sucesso
+          },
+          error => {
+            console.error('Error submitting review:', error);
+            // Aqui você pode adicionar lógica para mostrar uma mensagem de erro
+          }
+        );
       }
     });
   }
+  
 
   toggleExpand(book: any): void {
     // Atualiza apenas a propriedade expanded do livro clicado

@@ -3,12 +3,22 @@
   <mat-form-field appearance="fill">
     <mat-label>Rating</mat-label>
     <input matInput type="number" id="rating" [(ngModel)]="rating" name="rating" min="1" max="5" required />
+    <mat-error *ngIf="reviewForm.controls['rating']?.invalid && reviewForm.controls['rating']?.touched">
+      Rating is required and must be between 1 and 5.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Review</mat-label>
     <textarea matInput id="review" [(ngModel)]="review" name="review" required></textarea>
+    <mat-error *ngIf="reviewForm.controls['review']?.invalid && reviewForm.controls['review']?.touched">
+      Review is required.
+    </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Submit</button>
+  <div class="form-buttons">
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+    <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+  </div>
 </form>
+

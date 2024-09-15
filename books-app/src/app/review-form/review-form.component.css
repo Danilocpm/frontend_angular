@@ -20,16 +20,25 @@ form {
     max-width: 600px; /* Ajuste conforme necessário */
   }
   
-  .review-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  mat-form-field {
-    margin-bottom: 16px;
-  }
   
   button {
     align-self: flex-end;
   }
   
+  .review-form {
+    display: flex;
+    flex-direction: row; /* Alinha os campos do formulário horizontalmente */
+    gap: 24px; /* Espaçamento entre os campos */
+    align-items: center;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espaçamento entre os campos do formulário */
+    flex: 1; 
+  }
+  
+  mat-form-field {
+    width: 100%; /* Faz com que os campos ocupem o espaço disponível */
+  }

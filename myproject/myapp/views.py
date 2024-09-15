@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from .models import FavoriteBook
 from .serializers import FavoriteBookSerializer
 from rest_framework import viewsets
+from .models import Review
+from .serializers import ReviewSerializer
 
 class HelloWorldView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -18,3 +20,11 @@ class FavoriteBookViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)  # Associa o usuário autenticado à review
