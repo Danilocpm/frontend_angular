@@ -1,8 +1,8 @@
 // favorite-book.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError, forkJoin } from 'rxjs';
+import { catchError, map, switchMap} from 'rxjs/operators';
 import { AuthService } from './auth.service';  // Certifique-se de ajustar o caminho conforme necessário
 
 
@@ -13,11 +13,24 @@ export interface FavoriteBook {
   tag: string;
   // Adicione outros campos relevantes aqui
 }
+
+export interface BookDetails {
+  id: string;
+  title: string;
+  authors: string[];
+  description: string;
+  imageLinks: {
+    thumbnail: string;
+  };
+}
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class FavoriteBookService {
   private apiUrl = 'http://localhost:8000/api/favorites/'; // Altere para o endpoint correto
+  private googleBooksApiUrl = 'https://www.googleapis.com/books/v1/volumes';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -69,6 +82,22 @@ export class FavoriteBookService {
       catchError((error) => {
         console.error('Error fetching favorite books:', error);
         return throwError(() => new Error('Failed to fetch favorite books'));
+      })
+    );
+  }
+
+  getBookDetails(bookId: string): Observable<BookDetails> {
+    return this.http.get<any>(`${this.googleBooksApiUrl}/${bookId}`).pipe(
+      map(response => ({
+        id: response.id,
+        title: response.volumeInfo.title,
+        authors: response.volumeInfo.authors || [],
+        description: response.volumeInfo.description || '',
+        imageLinks: response.volumeInfo.imageLinks || { thumbnail: '' }
+      })),
+      catchError(error => {
+        console.error('Error fetching book details:', error);
+        return throwError(() => new Error('Failed to fetch book details'));
       })
     );
   }

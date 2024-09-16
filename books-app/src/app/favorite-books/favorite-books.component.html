@@ -1,1 +1,38 @@
-<p>favorite-books works!</p>
+<!-- favorite-books.component.html -->
+
+<div class="favorite-books-container">
+    <h1>Meus Livros Favoritos</h1>
+  
+    <!-- Filtro por Tag -->
+    <mat-form-field appearance="fill" class="tag-filter">
+      <mat-label>Filtrar por Tag</mat-label>
+      <mat-select [(ngModel)]="selectedTag" (selectionChange)="filterBooks()">
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let tag of uniqueTags" [value]="tag">{{ tag }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <!-- Lista de Livros -->
+    <div class="books-grid">
+      <mat-card *ngFor="let book of favoriteBooksDetails" class="book-card">
+        <mat-card-header>
+          <mat-card-title>{{ book.title }}</mat-card-title>
+          <mat-card-subtitle>{{ book.authors.join(', ') }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="book.imageLinks.thumbnail" alt="{{ book.title }} capa" class="book-cover">
+        <mat-card-content>
+          <p>{{ book.description | slice:0:150 }}...</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="viewBookDetails(book)">Ver Detalhes</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  
+    <!-- Mensagem quando não há livros -->
+    <mat-card *ngIf="favoriteBooksDetails.length === 0" class="no-books-message">
+      <mat-card-content>
+        <p>Nenhum livro favorito encontrado. Adicione alguns livros à sua lista de favoritos!</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
