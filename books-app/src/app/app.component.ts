@@ -5,6 +5,7 @@ import { BookSearchComponent } from './book-search/book-search.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -15,6 +16,7 @@ import { AuthService } from './auth.service';
     RouterModule,
     BookSearchComponent,
     LoginComponent,
+ 
   ]
 })
 export class AppComponent {

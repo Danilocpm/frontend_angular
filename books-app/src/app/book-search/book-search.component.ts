@@ -2,25 +2,29 @@ import { Component } from '@angular/core';
 import { BookService } from '../book.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FavoriteService } from '../favorite.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewFormComponent } from '../review-form/review-form.component';
 import { ReviewService } from '../review.service';
+import { AuthService } from '../auth.service';
+import { FavoriteBookService } from '../favorite.service';
+import { FavoriteFormComponent } from '../favorite-form/favorite-form.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-book-search',
   standalone: true,
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.css'],
-  imports: [CommonModule, FormsModule]  // Importa módulos necessários diretamente
+  imports: [CommonModule, FormsModule, MatSnackBarModule]  // Importa módulos necessários diretamente
 })
 export class BookSearchComponent {
   books: any[] = [];
   query: string = '';
   filter: 'intitle' | 'inauthor' = 'intitle';
   maxLength: number = 200; // Define o comprimento máximo da descrição
+  favoriteBookIds: string[] = [];
 
-  constructor(private bookService: BookService, private favoriteService: FavoriteService, public dialog: MatDialog, private reviewService: ReviewService) {}
+  constructor(private bookService: BookService, private favoriteBookService: FavoriteBookService, public dialog: MatDialog, private reviewService: ReviewService, private authService: AuthService, private snackBar: MatSnackBar) {}
 
   search(): void {
     this.bookService.searchBooks(this.query, this.filter).subscribe((data) => {
@@ -57,7 +61,41 @@ export class BookSearchComponent {
       }
     });
   }
-  
+
+addToFavorites(bookId: string): void {
+    const dialogRef = this.dialog.open(FavoriteFormComponent, {
+      width: '400px',
+      height: 'auto',
+      panelClass: 'custom-dialog-container',
+      data: { bookId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Favorite book data:', result);
+
+        this.favoriteBookService.addFavoriteBook(bookId, result.tag).subscribe(
+          (response: Response) => {
+            console.log('Book added to favorites:', response);
+            this.showSuccessMessage('Livro adicionado aos favoritos com sucesso!');
+          },
+          (error: Error) => {
+            console.error('Error adding book to favorites:', error);
+            this.showErrorMessage('Erro ao adicionar livro aos favoritos. Tente novamente.');
+          }
+        );
+      }
+    });
+  }
+
+  private showSuccessMessage(message: string): void {
+    this.snackBar.open(message, 'Fechar', { duration: 3000 });
+  }
+
+  private showErrorMessage(message: string): void {
+    this.snackBar.open(message, 'Fechar', { duration: 5000 });
+  }
+
 
   toggleExpand(book: any): void {
     // Atualiza apenas a propriedade expanded do livro clicado
@@ -76,21 +114,7 @@ export class BookSearchComponent {
       return description.substring(0, this.maxLength) + '...';
     }
   }
-
-  addToFavorites(bookId: string): void {
-    this.favoriteService.addFavorite(bookId).subscribe(
-      response => {
-        console.log('Book added to favorites:', response);
-        // Optionally, provide user feedback here
-      },
-      error => {
-        console.error('Error adding book to favorites:', error);
-        // Optionally, provide error feedback here
-      }
-    );
-  }
 }
-
 
 
 

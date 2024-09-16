@@ -4,7 +4,14 @@ from rest_framework import serializers
 
 class FavoriteBook(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book_id = models.CharField(max_length=255)  # or any other relevant fields
+    book_id = models.CharField(max_length=255)
+    tag = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book_id}"
+
+    class Meta:
+        unique_together = ['user', 'book_id']
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Usuário que fez a review

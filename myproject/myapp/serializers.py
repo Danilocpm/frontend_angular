@@ -5,7 +5,7 @@ from .models import Review
 class FavoriteBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = FavoriteBook
-        fields = ['id', 'user', 'book_id']  # Include 'id' for reference
+        fields = ['id', 'user', 'book_id', 'tag']  # Include 'id' for reference
         read_only_fields = ['user']  # User is set automatically
 
 class ReviewSerializer(serializers.ModelSerializer):

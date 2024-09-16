@@ -104,4 +104,17 @@
 .custom-dialog-container {
   transform: translate(-50%, -50%);
 }
-  
+
+.success-snackbar {
+  background: #4CAF50;
+  color: white;
+}
+
+.error-snackbar {
+  background: #F44336;
+  color: white;
+}
+
+.mat-simple-snackbar-action {
+  color: white;
+}

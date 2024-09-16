@@ -13,14 +13,6 @@ class HelloWorldView(APIView):
     def get(self, request):
         return Response(data={"message": "Hello, world!"}, status=200)
 
-class FavoriteBookViewSet(viewsets.ModelViewSet):
-    queryset = FavoriteBook.objects.all()
-    serializer_class = FavoriteBookSerializer
-    permission_classes = [IsAuthenticated]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
@@ -28,3 +20,24 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)  # Associa o usuário autenticado à review
+
+class FavoriteBookViewSet(viewsets.ModelViewSet):
+    queryset = FavoriteBook.objects.all()
+    serializer_class = FavoriteBookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+     return FavoriteBook.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Adiciona o usuário autenticado ao livro favorito
+        serializer.save(user=self.request.user)
+
+class FavoriteBooksListView(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Filtra os livros favoritos pelo usuário autenticado
+        favorite_books = FavoriteBook.objects.filter(user=request.user)
+        serializer = FavoriteBookSerializer(favorite_books, many=True)
+        return Response(serializer.data)
