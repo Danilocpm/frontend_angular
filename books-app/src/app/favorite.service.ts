@@ -2,9 +2,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';  // Certifique-se de ajustar o caminho conforme necessário
 
+
+
+export interface FavoriteBook {
+  id: number;
+  book_id: string;
+  tag: string;
+  // Adicione outros campos relevantes aqui
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -49,14 +57,15 @@ export class FavoriteBookService {
     );
   }
 
-  getFavoriteBooks(): Observable<any> {
+  getFavoriteBooks(): Observable<FavoriteBook[]> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
 
-    return this.http.get<any>(this.apiUrl, { headers }).pipe(
+    return this.http.get<FavoriteBook[]>(this.apiUrl, { headers }).pipe(
+      map(books => books.sort((a, b) => a.tag.localeCompare(b.tag))), // Ordena por tag
       catchError((error) => {
         console.error('Error fetching favorite books:', error);
         return throwError(() => new Error('Failed to fetch favorite books'));

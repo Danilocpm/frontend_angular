@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { BookSearchComponent } from './book-search/book-search.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
+import { FavoriteBooksComponent } from './favorite-books/favorite-books.component';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { AuthService } from './auth.service';
     RouterModule,
     BookSearchComponent,
     LoginComponent,
+    FavoriteBooksComponent
  
   ]
 })
