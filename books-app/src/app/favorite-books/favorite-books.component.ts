@@ -12,13 +12,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { BookDetailsDialogComponent } from './book-details-dialog.component';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon'; 
 
 @Component({
   selector: 'app-favorite-books',
   templateUrl: './favorite-books.component.html',
   styleUrls: ['./favorite-books.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule, MatListModule, MatSelectModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDialogModule ] 
+  imports: [CommonModule, FormsModule, MatListModule, MatSelectModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatDialogModule, MatIconModule ] 
 })
 export class FavoriteBooksComponent implements OnInit {
   allBooks: FavoriteBook[] = [];
@@ -79,5 +80,19 @@ export class FavoriteBooksComponent implements OnInit {
       width: '500px',
       data: book
     });
+}   
+
+removeFavoriteBook(bookId: string) {
+  this.favoriteBookService.removeFavoriteBook(bookId).subscribe({
+    next: () => {
+      console.log('Book removed successfully');
+      // Atualiza a lista de livros favoritos após a remoção
+      this.loadFavoriteBooks();
+    },
+    error: (error) => {
+      console.error('There was an error removing the book:', error);
+    }
+  });
 }
 }
+

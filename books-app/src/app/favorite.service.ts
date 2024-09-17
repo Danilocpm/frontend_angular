@@ -54,22 +54,6 @@ export class FavoriteBookService {
     );
   }
 
-  removeFavoriteBook(bookId: string): Observable<any> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-
-    // Assumindo que o endpoint para remover um livro favorito é /{bookId}
-    return this.http.delete<any>(`${this.apiUrl}${bookId}/`, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error removing favorite book:', error);
-        return throwError(() => new Error('Failed to remove favorite book'));
-      })
-    );
-  }
-
   getFavoriteBooks(): Observable<FavoriteBook[]> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
@@ -98,6 +82,22 @@ export class FavoriteBookService {
       catchError(error => {
         console.error('Error fetching book details:', error);
         return throwError(() => new Error('Failed to fetch book details'));
+      })
+    );
+  }
+
+  removeFavoriteBook(bookId: string): Observable<void> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    // Fazendo a requisição DELETE para o endpoint de remoção
+    return this.http.delete<void>(`${this.apiUrl}${bookId}/delete-favorite/`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error removing favorite book:', error);
+        return throwError(() => new Error('Failed to remove favorite book'));
       })
     );
   }
