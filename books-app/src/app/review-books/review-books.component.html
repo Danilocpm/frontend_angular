@@ -1,0 +1,23 @@
+<div>
+    <h2>Edit a Review</h2>
+    <form [formGroup]="editForm" (ngSubmit)="editReview()">
+      <select formControlName="reviewId" required>
+        <option value="" disabled>Select Review</option>
+        <option *ngFor="let review of reviews" [value]="review.id">
+          {{ review.book_id }}: {{ review.rating }} - {{ review.review }}
+        </option>
+      </select>
+      <input formControlName="newRating" type="number" min="1" max="5" placeholder="New Rating" required>
+      <textarea formControlName="newReview" placeholder="New Review" required></textarea>
+      <button type="submit">Edit</button>
+    </form>
+  
+    <h2>Reviews</h2>
+    <ul>
+      <li *ngFor="let review of reviews">
+        <strong>{{ review.book_id }}</strong>: {{ review.rating }} - {{ review.review }}
+      </li>
+    </ul>
+  
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </div>

@@ -5,6 +5,7 @@ import { BookSearchComponent } from './book-search/book-search.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { FavoriteBooksComponent } from './favorite-books/favorite-books.component';
+import { ReviewBooksComponent } from './review-books/review-books.component';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { FavoriteBooksComponent } from './favorite-books/favorite-books.componen
     RouterModule,
     BookSearchComponent,
     LoginComponent,
-    FavoriteBooksComponent
+    FavoriteBooksComponent,
+    ReviewBooksComponent
  
   ]
 })

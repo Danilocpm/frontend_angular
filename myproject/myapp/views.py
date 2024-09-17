@@ -8,6 +8,8 @@ from .models import Review
 from .serializers import ReviewSerializer
 from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 class HelloWorldView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -19,6 +21,38 @@ class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    ordering_fields = ['rating']
+
+    @action(detail=False, methods=['get'])
+    def list_by_rating(self, request):
+        """List reviews ordered by rating."""
+        order = request.query_params.get('order', 'asc')
+        if order == 'desc':
+            reviews = Review.objects.all().order_by('-rating')
+        else:
+            reviews = Review.objects.all().order_by('rating')
+        serializer = self.get_serializer(reviews, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated])
+    def edit_review(self, request, pk=None):
+        """Edit a review if the user is the owner and the book_id matches."""
+        review = get_object_or_404(Review, pk=pk, user=request.user)
+
+        # Ensure the book_id matches if provided
+        book_id = request.data.get('book_id', None)
+        if book_id and review.book_id != book_id:
+            return Response(
+                {"detail": "Book ID does not match the review."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.get_serializer(review, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)  # Associa o usuário autenticado à review

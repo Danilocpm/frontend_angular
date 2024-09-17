@@ -14,6 +14,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -23,7 +24,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideRouter(appRoutes),
-    importProvidersFrom(FormsModule, MatDialogModule, MatInputModule, BrowserAnimationsModule, NoopAnimationsModule, MatListModule, MatSelectModule, MatFormFieldModule), // Adicionar FormsModule aqui
+    importProvidersFrom(FormsModule, MatDialogModule, MatInputModule, BrowserAnimationsModule, NoopAnimationsModule, MatListModule, MatSelectModule, MatFormFieldModule, ReactiveFormsModule), // Adicionar FormsModule aqui
     {
       provide: JWT_OPTIONS,
       useValue: {
