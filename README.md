@@ -14,7 +14,7 @@ Neste projeto, foi desafiado a criar uma aplicação para explorar uma coleção
 
 - **Python** 3.12
 - **Angular** 18
-- **Bootstrap** 5.3.0 (versão utilizada no Angular 18)
+- **Bootstrap** 5.3.0 
 - **Postman** (para testes)
 
 ## Instalação
