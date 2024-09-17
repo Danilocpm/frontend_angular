@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // Adicione esta importação
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-review-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule], // Inclua CommonModule aqui
+  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatButtonModule,], // Inclua CommonModule aqui
   templateUrl: './review-form.component.html',
   styleUrls: ['./review-form.component.css']
 })

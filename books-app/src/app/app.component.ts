@@ -6,6 +6,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { FavoriteBooksComponent } from './favorite-books/favorite-books.component';
 import { ReviewBooksComponent } from './review-books/review-books.component';
+import { ReviewFormComponent } from './review-form/review-form.component';
+
 
 
 @Component({
@@ -19,7 +21,8 @@ import { ReviewBooksComponent } from './review-books/review-books.component';
     BookSearchComponent,
     LoginComponent,
     FavoriteBooksComponent,
-    ReviewBooksComponent
+    ReviewBooksComponent,
+    ReviewFormComponent
  
   ]
 })
