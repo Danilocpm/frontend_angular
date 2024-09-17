@@ -74,7 +74,7 @@ Para configurar o projeto localmente, siga os passos abaixo:
 
 ## Contato
 
-Seu Nome - [seu-email@example.com](mailto:seu-email@example.com)
+Seu Nome - [danilocarneirop@gmail.com](mailto:danilocarneirop@gmail.com)
 
 Link para o perfil do GitHub: [https://github.com/Danilocpm](https://github.com/Danilocpm)
 
