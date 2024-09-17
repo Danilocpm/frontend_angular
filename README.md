@@ -14,7 +14,7 @@ Neste projeto, foi desafiado a criar uma aplicação para explorar uma coleção
 
 - **Python** 3.12
 - **Angular** 18
-- **Bootstrap** 5.3.0 (versão utilizada no Angular 18)
+- **Bootstrap** 5.3.0 
 - **Postman** (para testes)
 
 ## Instalação
@@ -71,10 +71,56 @@ Para configurar o projeto localmente, siga os passos abaixo:
     ```bash
     npm run start-all
     ```
+## Contribuição
+
+Contribuições são sempre bem-vindas! Se você gostaria de contribuir para este projeto, siga os passos abaixo:
+
+1. **Faça um Fork do Repositório**:
+   - Clique no botão "Fork" no canto superior direito deste repositório no GitHub para criar uma cópia do projeto na sua conta.
+
+2. **Clone o Repositório Forkado**:
+   - Clone o repositório forkado para sua máquina local:
+     ```bash
+     git clone https://github.com/seu-usuario/frontend_angular.git
+     ```
+
+3. **Crie uma Branch para Sua Alteração**:
+   - Navegue até o diretório do projeto:
+     ```bash
+     cd frontend_angular
+     ```
+   - Crie uma nova branch para suas alterações:
+     ```bash
+     git checkout -b minha-feature
+     ```
+
+4. **Faça Suas Alterações**:
+   - Realize as alterações necessárias e faça commits com mensagens descritivas:
+     ```bash
+     git add .
+     git commit -m "Adiciona nova feature"
+     ```
+
+5. **Envie Suas Alterações**:
+   - Envie suas alterações para o repositório remoto:
+     ```bash
+     git push origin minha-feature
+     ```
+
+6. **Abra um Pull Request**:
+   - Vá para a página do repositório original no GitHub e abra um Pull Request com suas alterações. Descreva claramente o que foi alterado e por que as mudanças são benéficas.
+
+## Diretrizes para Contribuição
+
+- **Documentação**: Certifique-se de atualizar a documentação relevante se suas alterações afetam a forma como o projeto deve ser usado.
+- **Testes**: Adicione testes para garantir que suas alterações não introduzam bugs.
+- **Estilo de Código**: Siga o estilo de código existente para garantir consistência no projeto.
+- **Problemas e Recursos**: Verifique os problemas existentes e recursos planejados para ver se suas alterações se alinham com o que já está sendo trabalhado ou solicitado.
+
 
 ## Contato
 
-Seu Nome - [seu-email@example.com](mailto:seu-email@example.com)
+Seu Nome - [danilocarneirop@gmail.com](mailto:danilocarneirop@gmail.com)
 
 Link para o perfil do GitHub: [https://github.com/Danilocpm](https://github.com/Danilocpm)
 
