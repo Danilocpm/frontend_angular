@@ -1,27 +1,96 @@
-<div>
-    <h2>Edit a Review</h2>
-    <form [formGroup]="editForm" (ngSubmit)="editReview()">
-      <select formControlName="reviewId" required>
-        <option value="" disabled>Select Review</option>
-        <option *ngFor="let review of reviews" [value]="review.id">
-          {{ review.bookTitle }}: {{ review.rating }} - {{ review.review }}
-        </option>
-      </select>
-      <input formControlName="newRating" type="number" min="1" max="5" placeholder="New Rating" required>
-      <textarea formControlName="newReview" placeholder="New Review" required></textarea>
-      <button type="submit">Edit</button>
-    </form>
-  
-    <h2>Reviews</h2>
-    <ul>
-      <li *ngFor="let review of reviews" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img [src]="review.bookThumbnail" alt="{{ review.bookTitle }}" style="width: 50px; height: auto; margin-right: 10px;">
-        <div style="flex-grow: 1;">
-          <strong>{{ review.bookTitle }}</strong>: {{ review.rating }} - {{ review.review }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>Review Page</title>
+  <style>
+    .star {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MySite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/busca">Busca</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reviews">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/Favorites">Favoritos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Coluna para Reviews -->
+      <div class="col-md-6">
+        <h2>Reviews</h2>
+        <div *ngFor="let review of reviews" class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img [src]="review.bookThumbnail" alt="{{ review.bookTitle }}" class="card-img" style="height: 100%; object-fit: cover;">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ review.bookTitle }}</h5>
+                <p class="card-text">
+                  <strong>Rating:</strong> {{ review.rating }} <span class="star">★</span>
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">{{ review.review }}</small>
+                </p>
+                <button (click)="deleteReview(review.id)" class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <button (click)="deleteReview(review.id)" style="margin-left: 10px;">Delete</button>
-      </li>
-    </ul>
-  
-    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+      </div>
+
+      <!-- Coluna para Editar Review -->
+      <div class="col-md-6">
+        <h2>Edit a Review</h2>
+        <form [formGroup]="editForm" (ngSubmit)="editReview()" class="mb-4">
+          <div class="form-group">
+            <label for="reviewId">Select Review</label>
+            <select class="form-control" formControlName="reviewId" required>
+              <option value="" disabled>Select Review</option>
+              <option *ngFor="let review of reviews" [value]="review.id">
+                {{ review.bookTitle }}: {{ review.rating }} - {{ review.review }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="newRating">New Rating</label>
+            <input class="form-control" formControlName="newRating" type="number" min="1" max="5" placeholder="New Rating" required>
+          </div>
+          <div class="form-group">
+            <label for="newReview">New Review</label>
+            <textarea class="form-control" formControlName="newReview" placeholder="New Review" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
