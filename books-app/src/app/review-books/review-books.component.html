@@ -4,7 +4,7 @@
       <select formControlName="reviewId" required>
         <option value="" disabled>Select Review</option>
         <option *ngFor="let review of reviews" [value]="review.id">
-          {{ review.book_id }}: {{ review.rating }} - {{ review.review }}
+          {{ review.bookTitle }}: {{ review.rating }} - {{ review.review }}
         </option>
       </select>
       <input formControlName="newRating" type="number" min="1" max="5" placeholder="New Rating" required>
@@ -14,8 +14,12 @@
   
     <h2>Reviews</h2>
     <ul>
-      <li *ngFor="let review of reviews">
-        <strong>{{ review.book_id }}</strong>: {{ review.rating }} - {{ review.review }}
+      <li *ngFor="let review of reviews" style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img [src]="review.bookThumbnail" alt="{{ review.bookTitle }}" style="width: 50px; height: auto; margin-right: 10px;">
+        <div style="flex-grow: 1;">
+          <strong>{{ review.bookTitle }}</strong>: {{ review.rating }} - {{ review.review }}
+        </div>
+        <button (click)="deleteReview(review.id)" style="margin-left: 10px;">Delete</button>
       </li>
     </ul>
   

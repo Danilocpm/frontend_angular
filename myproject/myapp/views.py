@@ -53,6 +53,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods=['delete'], permission_classes=[IsAuthenticated])
+    def delete_review(self, request, pk=None):
+        """Delete a review if the user is the owner."""
+        review = get_object_or_404(Review, pk=pk, user=request.user)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)  # Associa o usuário autenticado à review

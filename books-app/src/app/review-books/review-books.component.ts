@@ -3,6 +3,18 @@ import { ReviewService } from '../review.service'; // Ajuste o caminho conforme 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; 
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs';
+
+interface Review {
+  id: string;
+  book_id: string;
+  rating: number;
+  review: string;
+  bookTitle?: string;
+  bookThumbnail?: string;
+}
+
 
 
 @Component({
@@ -32,8 +44,28 @@ export class ReviewBooksComponent implements OnInit {
 
   loadReviews(order: 'asc' | 'desc'): void {
     this.reviewService.searchReviews(order).subscribe({
-      next: (data) => {
-        this.reviews = data;
+      next: (data: Review[]) => {
+        // Para cada review, buscar detalhes do livro
+        const reviewDetails$ = data.map((review: Review) => 
+          this.reviewService.getBookDetails(review.book_id).pipe(
+            map(bookDetails => ({
+              ...review,
+              bookTitle: bookDetails.title,
+              bookThumbnail: bookDetails.imageLinks.thumbnail
+            }))
+          )
+        );
+
+        // Executa todas as requisições de detalhes do livro em paralelo
+        forkJoin(reviewDetails$).subscribe({
+          next: (detailedReviews: Review[]) => {
+            this.reviews = detailedReviews;
+          },
+          error: (error) => {
+            console.error('Error fetching book details:', error);
+            this.errorMessage = 'Failed to load book details';
+          }
+        });
       },
       error: (error) => {
         console.error('Error loading reviews:', error);
@@ -55,5 +87,18 @@ export class ReviewBooksComponent implements OnInit {
         }
       );
     }
+  }
+
+  deleteReview(reviewId: string): void {
+    this.reviewService.deleteReview(reviewId).subscribe(
+      () => {
+        console.log('Review deleted');
+        this.loadReviews('asc'); // Reload reviews after deletion
+      },
+      (error) => {
+        console.error('Error deleting review:', error);
+        this.errorMessage = 'Failed to delete review';
+      }
+    );
   }
 }
