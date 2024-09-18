@@ -18,7 +18,7 @@
     </mat-form-field>
   </form>
 </mat-dialog-content>
-<mat-dialog-actions align="start">
+<mat-dialog-actions class="mat-dialog-actions-start">
   <button mat-button (click)="dialogRef.close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="submitReview()" [disabled]="!reviewForm.form.valid">Submit</button>
 </mat-dialog-actions>

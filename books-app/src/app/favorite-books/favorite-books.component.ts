@@ -12,7 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { BookDetailsDialogComponent } from './book-details-dialog.component';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon'; 
+import { MatIconModule } from '@angular/material/icon';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'; 
 
 @Component({
   selector: 'app-favorite-books',
@@ -27,8 +28,9 @@ export class FavoriteBooksComponent implements OnInit {
   uniqueTags: string[] = [];
   selectedTag: string = '';
   favoriteBooksDetails: BookDetails[] = [];
+  
 
-  constructor(private favoriteBookService: FavoriteBookService, private dialog: MatDialog, private router: Router) {}
+  constructor(private favoriteBookService: FavoriteBookService, private dialog: MatDialog, private router: Router, private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
     this.loadFavoriteBooks();
@@ -43,6 +45,10 @@ export class FavoriteBooksComponent implements OnInit {
       },
       error => console.error('Error loading favorite books:', error)
     );
+  }
+
+  getSafeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   extractUniqueTags() {

@@ -1,7 +1,39 @@
-<!-- favorite-books.component.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>Favoritos Page</title>
+  <style>
+    .star {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MySite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/busca">Busca</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reviews">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/favoritos">Favoritos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
 <div class="favorite-books-container">
-    <h1>Meus Livros Favoritos</h1>
   
     <!-- Filtro por Tag -->
     <mat-form-field appearance="fill" class="tag-filter">
@@ -27,7 +59,8 @@
         </mat-card-header>
         <img mat-card-image [src]="book.imageLinks.thumbnail" alt="{{ book.title }} capa" class="book-cover">
         <mat-card-content>
-          <p>{{ book.description | slice:0:150 }}...</p>
+          <div [innerHTML]="getSafeHtml(book.description | slice:0:150)"></div>
+          <span *ngIf="book.description && book.description.length > 150">...</span>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button color="primary" (click)="viewBookDetails(book)">Ver Detalhes</button>

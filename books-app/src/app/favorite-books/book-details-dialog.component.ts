@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/materia
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { BookDetails } from '../favorite.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-book-details-dialog',
@@ -12,7 +13,8 @@ import { BookDetails } from '../favorite.service';
     <mat-dialog-content>
       <img [src]="data.imageLinks.thumbnail" alt="{{ data.title }} capa">
       <p><strong>Autores:</strong> {{ data.authors.join(', ') }}</p>
-      <p><strong>Descrição:</strong> {{ data.description }}</p>
+      <p><strong>Descrição:</strong></p>
+      <div [innerHTML]="getSafeHtml(data.description)"></div>
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button (click)="closeDialog()">Fechar</button>
@@ -24,10 +26,15 @@ import { BookDetails } from '../favorite.service';
 export class BookDetailsDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<BookDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: BookDetails
+    @Inject(MAT_DIALOG_DATA) public data: BookDetails,
+    private sanitizer: DomSanitizer
   ) {}
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  getSafeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 }
