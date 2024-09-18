@@ -12,7 +12,7 @@ Neste projeto, foi desafiado a criar uma aplicação para explorar uma coleção
 
 ## Tecnologias Utilizadas
 
-- **Python** 3.12
+- **Python** 3.12.3
 - **Angular** 18.2.0
 - **Node** 20.13.1
 - **Django** 5.1.1
