@@ -13,9 +13,11 @@ Neste projeto, foi desafiado a criar uma aplicação para explorar uma coleção
 ## Tecnologias Utilizadas
 
 - **Python** 3.12
-- **Angular** 18
-- **Bootstrap** 5.3.0 
+- **Angular** 18.2.0
+- **Node** 20.13.1
+- **Django** 5.1.1
 - **Postman** (para testes)
+
 
 ## Instalação
 
