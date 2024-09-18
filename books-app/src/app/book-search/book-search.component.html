@@ -1,33 +1,66 @@
-<header class="site-header">
-  <div class="header-content">
-    <input [(ngModel)]="query" (keydown.enter)="search()" placeholder="Search term" />
-    <select [(ngModel)]="filter">
-      <option value="intitle">Title</option>
-      <option value="inauthor">Author</option>
-    </select>
-  </div>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <title>Review Page</title>
+  <style>
+    .star {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">MySite</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/busca">Busca</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reviews">Reviews</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/favoritos">Favoritos</a>
+        </li>
+      </ul>
+      <div class="header-content form-inline">
+        <input class="form-control mr-sm-2" [(ngModel)]="query" (keydown.enter)="search()" placeholder="Search term" />
+        <select class="form-control" [(ngModel)]="filter">
+          <option value="intitle">Title</option>
+          <option value="inauthor">Author</option>
+        </select>
+      </div>
+    </div>
+  </nav>
 
-<div class="books-container">
-  <div *ngIf="books.length" class="books-wrapper">
-    <div *ngFor="let book of books" class="book-card">
-      <img *ngIf="book.volumeInfo.imageLinks" [src]="book.volumeInfo.imageLinks.thumbnail" alt="Book cover" class="book-cover" />
-      <div class="book-details">
-        <h3>{{ book.volumeInfo.title }}</h3>
-        <p><strong>Author(s):</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
-        <p class="book-description" [ngClass]="{'expanded': book.expanded}">
-          {{ getDescription(book.volumeInfo.description, book.expanded) }}
-          <span *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)">...</span>
-          <a *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)" (click)="toggleExpand(book)">Ler mais</a>
-        </p>
-        <div class="book-actions">
-          <i class="fa fa-star" aria-hidden="true" (click)="addToFavorites(book.id)"></i> <!-- Add click event -->
-          <i class="fa fa-pencil-alt" aria-hidden="true" (click)="openReviewDialog(book.id)"></i>
+  <!-- Books Container -->
+  <div class="books-container">
+    <div *ngIf="books.length" class="books-wrapper">
+      <div *ngFor="let book of books" class="book-card">
+        <img *ngIf="book.volumeInfo.imageLinks" [src]="book.volumeInfo.imageLinks.thumbnail" alt="Book cover" class="book-cover" />
+        <div class="book-details">
+          <h3>{{ book.volumeInfo.title }}</h3>
+          <p><strong>Author(s):</strong> {{ book.volumeInfo.authors?.join(', ') }}</p>
+          <p class="book-description" [ngClass]="{'expanded': book.expanded}">
+            {{ getDescription(book.volumeInfo.description, book.expanded) }}
+            <span *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)">...</span>
+            <a *ngIf="!book.expanded && isLongDescription(book.volumeInfo.description)" (click)="toggleExpand(book)">Ler mais</a>
+          </p>
+          <div class="book-actions">
+            <i class="fa fa-star" aria-hidden="true" (click)="addToFavorites(book.id)"></i>
+            <i class="fa fa-pencil-alt" aria-hidden="true" (click)="openReviewDialog(book.id)"></i>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
+</body>
+</html>
 
